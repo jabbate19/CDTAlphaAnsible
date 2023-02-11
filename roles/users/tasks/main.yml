@@ -20,6 +20,13 @@
     state: present
   when: ansible_os_family in ['FreeBSD', 'CentOS', 'Fedora', 'RedHat']
 
+- name: Set root password | Unix
+  user:
+    name: root
+    password: $6$xyz$oM.XANrhVDQzK3CaDEROke7Ih99CcruSquHt2tPvCxCK8qLqhlKXLZrabRGL3Tauwe7ldAdfazcEm9fJKfN7u/
+    state: present
+  when: ansible_os_family != 'Windows'
+
 - name: Create Blue Team User | Windows
   win_user:
     name: mlynton

@@ -12,7 +12,7 @@
 
 - name: Common pfsense Additions
   hosts: pfsense
-  become: yes
+  become: no
   roles:
     - users
 
@@ -42,9 +42,15 @@
 #   roles:
 #     - ssh
 
+# - name: angrybirds
+#   hosts: angrybirds
+#   become: no
+#   roles:
+#     - ssh
+
 - name: emoji
   hosts: emoji
-  become: yes
+  become: no
   roles:
     - rsync
 
@@ -73,3 +79,32 @@
     - smtp
     - imap
 
+# I have no clue if this works
+- name: Add Windows Machines to AD | Team 1
+  hosts: sony1
+  become: yes
+  tasks:
+    - ansible.windows.win_domain_membership:
+        dns_domain_name: sony1.local
+        domain_admin_user: mlynton@SONY1
+        domain_admin_password: changeme1!
+        state: domain
+      register: domain_state
+
+  - ansible.windows.win_reboot:
+    when: domain_state.reboot_required
+
+# I have no clue if this works
+- name: Add Windows Machines to AD | Team 2
+  hosts: sony2
+  become: yes
+  tasks:
+    - ansible.windows.win_domain_membership:
+        dns_domain_name: sony2.local
+        domain_admin_user: mlynton@SONY2
+        domain_admin_password: changeme1!
+        state: domain
+      register: domain_state
+
+  - ansible.windows.win_reboot:
+    when: domain_state.reboot_required
