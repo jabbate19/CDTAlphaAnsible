@@ -1,0 +1,16 @@
+- name: Copy installer to ProgramData
+  copy:
+    src: "mysql.msi"
+    dest: "C:\\ProgramData\\mysql.msi"
+    state: present
+
+- name: Install MSI
+  win_package:
+    path: 'C:\\ProgramData\\mysql.msi'
+    arguments: '/quiet'
+    state: present
+
+- name: Delete MSI
+  win_file:
+    path: 'C:\\ProgramData\\mysql.msi'
+    ensure: absent

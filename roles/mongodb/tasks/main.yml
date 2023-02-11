@@ -1,0 +1,16 @@
+- name: Copy installer to ProgramData
+  copy:
+    src: "mongodb.msi"
+    dest: "C:\\ProgramData\\mongodb.msi"
+    state: present
+
+- name: Install MSI
+  win_package:
+    path: 'C:\\ProgramData\\mongodb.msi'
+    arguments: '/quiet'
+    state: present
+
+- name: Delete MSI
+  win_file:
+    path: 'C:\\ProgramData\\mongodb.msi'
+    ensure: absent

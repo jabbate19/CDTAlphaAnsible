@@ -14,8 +14,8 @@ To only select a specific group, run `ansible-playbook -i inventory/inventory.in
 - [ ] AD
 - [ ] DNS
 - [x] Apache
-- [ ] MySQL
-- [ ] MongoDB
+- [x] MySQL
+- [x] MongoDB
 - [x] WinRM (Done manually to set up Ansible)
 - [x] SSH ^^^
 - [ ] RSync
