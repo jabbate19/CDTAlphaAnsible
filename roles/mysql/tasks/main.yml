@@ -1,16 +1,15 @@
 - name: Copy installer to ProgramData
-  copy:
-    src: "mysql.msi"
+  win_get_url:
+    url: "http://{{ http_host }}/roles/mysql/files/mysql.msi"
     dest: "C:\\ProgramData\\mysql.msi"
-    state: present
 
-- name: Install MSI
-  win_package:
-    path: 'C:\\ProgramData\\mysql.msi'
-    arguments: '/quiet'
-    state: present
+      #- name: Install MSI
+      #win_package:
+      #path: 'C:\\ProgramData\\mysql.msi'
+      #arguments: '/quiet'
+      #state: present
 
-- name: Delete MSI
-  win_file:
-    path: 'C:\\ProgramData\\mysql.msi'
-    ensure: absent
+      #- name: Delete MSI
+      #win_file:
+      #path: 'C:\\ProgramData\\mysql.msi'
+      #ensure: absent

@@ -7,10 +7,24 @@
 
 - name: Create new domain in a new forest on the target host
   ansible.windows.win_domain:
-    dns_domain_name: {{ domain }}
+    dns_domain_name: "{{ domain }}"
     safe_mode_password: changeme1!
+  register: ad
 
 - name: reboot server
-    win_reboot:
-      pre_reboot_delay: 15
-    when: ad.changed
+  win_reboot:
+    pre_reboot_delay: 5
+  when: ad.changed
+
+- name: Create Blue Team User | Windows
+  win_user:
+    name: mlynton
+    password: changeme1!
+    groups:
+      - Domain Users
+      - Domain Admins
+      - Enterprise Admins
+      - Schema Admins
+      - Administrators
+    state: present
+  when: ad.changed

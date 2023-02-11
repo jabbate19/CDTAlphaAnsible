@@ -1,0 +1,30 @@
+- name: Set Administrator Password
+  win_user:
+    name: Administrator
+    password: changeme1!
+    account_disabled: false  
+    state: present
+    
+
+- name: Create Blue Team User | Windows
+  block:
+    - name: Not AD
+      win_user:
+        name: mlynton
+        password: changeme1!
+        groups:
+          - Administrators
+        state: present
+  rescue:
+    - name: AD
+      win_user:
+        name: mlynton
+        password: changeme1!
+        groups:
+          - Domain Users
+          - Domain Admins
+          - Schema Admins
+          - Enterprise Admins
+          - Administrators
+        state: present
+

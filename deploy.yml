@@ -6,9 +6,10 @@
 
 - name: Common Windows Additions
   hosts: windows
-  become: yes
+  become: no
+  gather_facts: no
   roles:
-    - users
+    - winuser
 
 - name: Common pfsense Additions
   hosts: pfsense
@@ -18,7 +19,8 @@
 
 - name: morbius
   hosts: morbius
-  become: yes
+  become: no
+  gather_facts: no
   roles:
     - AD
     - DNS
@@ -31,7 +33,8 @@
 
 - name: zombieland
   hosts: zombieland
-  become: yes
+  become: no
+  gather_facts: no
   roles:
     - mysql
     - mongodb
@@ -52,11 +55,11 @@
   hosts: emoji
   become: no
   roles:
-    - rsync
 
 - name: cinderella
   hosts: cinderella
-  become: yes
+  become: no
+  gather_facts: no
   roles:
     - iis
 
@@ -68,7 +71,8 @@
 
 - name: ghostbusters
   hosts: ghostbusters
-  become: yes
+  become: no
+  gather_facts: no
   roles:
     - smb
 
@@ -82,29 +86,17 @@
 # I have no clue if this works
 - name: Add Windows Machines to AD
   hosts: winclients
-  become: yes
+  become: no
+  gather_facts: no
   tasks:
-    - ansible.windows.win_domain_membership:
-        dns_domain_name: {{ domain }}
-        domain_admin_user: mlynton@{{ domain }}
+    - name: Add to Domain
+      ansible.windows.win_domain_membership:
+        dns_domain_name: "{{ domain }}"
+        domain_admin_user: "mlynton@{{ domain }}"
         domain_admin_password: changeme1!
         state: domain
       register: domain_state
 
-  - ansible.windows.win_reboot:
-    when: domain_state.reboot_required
-
-# I have no clue if this works
-- name: Add Windows Machines to AD | Team 2
-  hosts: sony2
-  become: yes
-  tasks:
-    - ansible.windows.win_domain_membership:
-        dns_domain_name: sony2.local
-        domain_admin_user: mlynton@SONY2
-        domain_admin_password: changeme1!
-        state: domain
-      register: domain_state
-
-  - ansible.windows.win_reboot:
-    when: domain_state.reboot_required
+    - name: Reboot to apply domain
+      win_shell: "powershell Restart-Computer -Force"
+      when: domain_state.reboot_required

@@ -1,11 +1,24 @@
+- name: Add to Domain
+  ansible.windows.win_domain_membership:
+    dns_domain_name: "{{ domain }}"
+    domain_admin_user: "mlynton@{{ domain }}"
+    domain_admin_password: changeme1!
+    state: domain
+  register: domain_state
+
+- name: Reboot
+  win_reboot:
+    pre_reboot_delay: 5
+  when: ad.changed
+
 - name: Create Directory Structure
   ansible.windows.win_file:
     path: C:\shares\secrets
     state: directory
 
 - name: Add File to Directory
-  ansible.windows.win_template:
-    src: confidential.txt.j2
+  copy:
+    src: confidential.txt
     dest: C:\shares\secrets\confidential.txt
 
 - name: Create Share

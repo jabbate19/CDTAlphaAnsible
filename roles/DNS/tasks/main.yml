@@ -7,8 +7,8 @@
 
 - name: Ensure primary zone is present
   community.windows.win_dns_zone:
-    name: {{ domain }}
-    replication: forest
+    name: "{{ domain }}"
+      #replication: domain
     type: primary
     dynamic_update: nonsecureandsecure
     state: present

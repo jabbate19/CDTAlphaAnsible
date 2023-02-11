@@ -1,13 +1,12 @@
 - name: Copy installer to ProgramData
-  copy:
-    src: "mongodb.msi"
+  win_get_url:
+    url: "http://{{ http_host }}/roles/mongodb/files/mongodb.msi"
     dest: "C:\\ProgramData\\mongodb.msi"
-    state: present
 
 - name: Install MSI
   win_package:
     path: 'C:\\ProgramData\\mongodb.msi'
-    arguments: '/quiet'
+    arguments: '/quiet ADDLOCAL="ServerService"'
     state: present
 
 - name: Delete MSI
