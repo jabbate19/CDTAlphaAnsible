@@ -1,10 +1,49 @@
-- name: Create Blue Team User | Windows
-  win_user:
+- name: Create Blue Team User | Unix sudo
+  user:
     name: mlynton
-    password: changeme1!
-    groups:
-      #- Domain Admins
-      #- Enterprise Admins
-      #- Schema Admins
-      - Administrators
+    groups: sudo
+    # This is just a hash for changeme1!
+    password: $6$xyz$oM.XANrhVDQzK3CaDEROke7Ih99CcruSquHt2tPvCxCK8qLqhlKXLZrabRGL3Tauwe7ldAdfazcEm9fJKfN7u/
     state: present
+  when: ansible_os_family in ['Debian', 'Ubuntu']
+
+- name: Create Grey Team User | Unix sudo
+  user:
+    name: greyteam
+    groups: sudo
+    # This is just a hash for Greyteamiscool1!
+    password: $6$xyz$Y8C0coHl4.XAMRefpzwbUuBqA4zM8H.Qpwbu3.lGA7DMFPI3GFUc5Y8BX0t5oc5oX.Hv/NbtN7hku5EouLAhn.
+    state: present
+  when: ansible_os_family in ['Debian', 'Ubuntu']
+
+- name: Install Sudo on FreeBSD
+  pkgng:
+    name: sudo
+    state: present
+  when: ansible_os_family == 'FreeBSD'
+
+- name: Create Blue Team User | Unix wheel
+  user:
+    name: mlynton
+    groups: wheel
+    # This is just a hash for changeme1!
+    password: $6$xyz$oM.XANrhVDQzK3CaDEROke7Ih99CcruSquHt2tPvCxCK8qLqhlKXLZrabRGL3Tauwe7ldAdfazcEm9fJKfN7u/
+    state: present
+  when: ansible_os_family in ['FreeBSD', 'CentOS', 'Fedora', 'RedHat']
+
+- name: Create Grey Team User | Unix wheel
+  user:
+    name: greyteam
+    groups: wheel
+    # This is just a hash for Greyteamiscool1!
+    password: $6$xyz$Y8C0coHl4.XAMRefpzwbUuBqA4zM8H.Qpwbu3.lGA7DMFPI3GFUc5Y8BX0t5oc5oX.Hv/NbtN7hku5EouLAhn.
+    state: present
+  when: ansible_os_family in ['FreeBSD', 'CentOS', 'Fedora', 'RedHat']
+
+- name: Set root password | Unix
+  user:
+    name: root
+    # This is just a hash for changeme1!
+    password: $6$xyz$oM.XANrhVDQzK3CaDEROke7Ih99CcruSquHt2tPvCxCK8qLqhlKXLZrabRGL3Tauwe7ldAdfazcEm9fJKfN7u/
+    state: present
+  when: ansible_os_family != 'Windows'

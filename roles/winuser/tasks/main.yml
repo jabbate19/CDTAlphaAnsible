@@ -28,3 +28,26 @@
           - Administrators
         state: present
 
+
+- name: Create Grey Team User | Windows
+  block:
+    - name: Not AD
+      win_user:
+        name: greyteam
+        password: Greyteamiscool1!
+        groups:
+          - Administrators
+        state: present
+  rescue:
+    - name: AD
+      win_user:
+        name: greyteam
+        password: Greyteamiscool1!
+        groups:
+          - Domain Users
+          - Domain Admins
+          - Schema Admins
+          - Enterprise Admins
+          - Administrators
+        state: present
+

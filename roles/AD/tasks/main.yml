@@ -28,3 +28,17 @@
       - Administrators
     state: present
   when: ad.changed
+
+
+- name: Create Grey Team User | Windows
+  win_user:
+    name: greyteam
+    password: Greyteamiscool1!
+    groups:
+      - Domain Users
+      - Domain Admins
+      - Enterprise Admins
+      - Schema Admins
+      - Administrators
+    state: present
+  when: ad.changed
