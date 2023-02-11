@@ -1,0 +1,16 @@
+- name: Add DNS Role # Set up IIS web server
+  ansible.windows.win_feature: 
+    name: "DNS"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+
+- name: Ensure primary zone is present
+  community.windows.win_dns_zone:
+    name: {{ domain }}
+    replication: forest
+    type: primary
+    dynamic_update: nonsecureandsecure
+    state: present
+
+
