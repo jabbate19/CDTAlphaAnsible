@@ -4,14 +4,17 @@
     state: present
     include_sub_features: yes
     include_management_tools: yes
+
 - name: Verify Directory Structure  # Makes sure directory exists
   ansible.windows.win_file:
     path: C:\inetpub\wwwroot
     state: directory
+
 - name: Copy index.html to webroot # Copies the index.html files for display via the web server
   ansible.windows.win_copy:
     src: index.html
     dest: C:\inetpub\wwwroot\index.html
+
 - name: Test IIS Website # Sets up site on web server
   community.windows.win_iis_website:
     name: AnsibleTest

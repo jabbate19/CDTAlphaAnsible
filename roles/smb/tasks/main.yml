@@ -2,10 +2,12 @@
   ansible.windows.win_file:
     path: C:\shares\secrets
     state: directory
+
 - name: Add File to Directory
   ansible.windows.win_template:
     src: confidential.txt.j2
     dest: C:\shares\secrets\confidential.txt
+
 - name: Create Share
   ansible.windows.win_share:
     name: Secrets

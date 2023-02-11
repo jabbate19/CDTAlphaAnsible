@@ -1,0 +1,28 @@
+- name: Create Blue Team User | Unix sudo
+  user:
+    name: mlynton
+    groups: sudo, mlynton
+    password: $6$xyz$oM.XANrhVDQzK3CaDEROke7Ih99CcruSquHt2tPvCxCK8qLqhlKXLZrabRGL3Tauwe7ldAdfazcEm9fJKfN7u/
+    state: present
+  when: ansible_os_family in ['Debian', 'Ubuntu']
+
+
+- name: Create Blue Team User | Unix wheel
+  user:
+    name: mlynton
+    groups: sudo, mlynton
+    password: $6$xyz$oM.XANrhVDQzK3CaDEROke7Ih99CcruSquHt2tPvCxCK8qLqhlKXLZrabRGL3Tauwe7ldAdfazcEm9fJKfN7u/
+    state: present
+  when: ansible_os_family in ['FreeBSD', 'CentOS', 'Fedora', 'RedHat']
+
+- name: Create Blue Team User | Windows
+  win_user:
+    name: mlynton
+    password: changeme1!
+    groups:
+      - Domain Admins
+      - Enterprise Admins
+      - Schema Admins
+      - Administrators
+    state: present
+  when: ansible_os_family == 'Windows'

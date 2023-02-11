@@ -1,0 +1,21 @@
+- name: Installing and ensuring IMAP is at its latest state # name of task
+  apt: # function/command that will be used
+    name: dovecot # name of the service that is being installed
+    state: latest # even if the service is installed checks to make sure that it is the latest updated version
+  when: ansible_os_family in ['Debian', 'Ubuntu']
+
+- name: Installing and ensuring SMTP is at its latest state # name of task
+  yum: # function/command that will be used
+    name: dovecot # name of the service that is being installed
+    state: latest # even if the service is installed checks to make sure that it is the latest updated version
+  when: ansible_os_family in ['CentOS', 'Fedora', 'RedHat']
+
+- name: Enable service dovecot, and not touch the state # name of the task
+  service: # the function/command that is going to attempted
+    name: dovecot # the name of the service task is being executed for
+    enabled: yes # is used to enable the service upon startup "systemctl enable dovecot"
+
+- name: Starting SMTP # name of the task
+  service: # function/command that is being used in this case this is the alias to "systemctl"
+    name: dovecot # the service that is being checked
+    state: started # command that starts the service "systemctl start dovecot"
