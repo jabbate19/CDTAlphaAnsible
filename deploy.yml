@@ -1,0 +1,75 @@
+- name: Common Linux Additions
+  hosts: linux
+  become: yes
+  roles:
+    - users
+
+- name: Common Windows Additions
+  hosts: windows
+  become: yes
+  roles:
+    - users
+
+- name: Common pfsense Additions
+  hosts: pfsense
+  become: yes
+  roles:
+    - users
+
+- name: morbius
+  hosts: morbius
+  become: yes
+  roles:
+    - AD
+    - DNS
+
+- name: jumanji
+  hosts: jumanji
+  become: yes
+  roles:
+    - apache
+
+- name: zombieland
+  hosts: zombieland
+  become: yes
+  roles:
+    - mysql
+    - mongodb
+
+# - name: spiderman
+#   hosts: spiderman
+#   become: yes
+#   roles:
+#     - ssh
+
+- name: emoji
+  hosts: emoji
+  become: yes
+  roles:
+    - rsync
+
+- name: cinderella
+  hosts: cinderella
+  become: yes
+  roles:
+    - iis
+
+- name: billyjoel
+  hosts: billyjoel
+  become: yes
+  roles:
+    - minecraft
+
+- name: ghostbusters
+  hosts: ghostbusters
+  become: yes
+  roles:
+    - smb
+
+- name: venom
+  hosts: venom
+  become: yes
+  roles:
+    - smtp
+    - imap
+

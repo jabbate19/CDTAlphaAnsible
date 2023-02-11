@@ -1,0 +1,17 @@
+- name: Create Directory Structure
+  ansible.windows.win_file:
+    path: C:\shares\secrets
+    state: directory
+- name: Add File to Directory
+  ansible.windows.win_template:
+    src: confidential.txt.j2
+    dest: C:\shares\secrets\confidential.txt
+- name: Create Share
+  ansible.windows.win_share:
+    name: Secrets
+    description: Ansible Created Share
+    path: C:\shares\secrets
+    list: no
+    full: Domain Admins
+    read: ShareAllowGroup
+    deny: ShareDenyGroup
