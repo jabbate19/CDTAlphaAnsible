@@ -11,17 +11,17 @@ To only select a specific group, run `ansible-playbook -i inventory/inventory.in
 ## To-Do List
 
 - [x] Blue Team User
-- [x] AD (MAYBE?)
-- [x] DNS (MAYBE?)
+- [x] AD
+- [x] DNS
 - [x] Apache
-- [x] MySQL
+- [x] MySQL (Must run C:\ProgramData\mysql.msi manually)
 - [x] MongoDB
 - [x] WinRM (Done manually to set up Ansible)
 - [x] SSH ^^^
 - [ ] RSync
 - [x] IIS
 - [x] Minecraft Docker
-- [x] SMB (MAYBE?)
+- [x] SMB
 - [x] SMTP
 - [x] IMAP
 
