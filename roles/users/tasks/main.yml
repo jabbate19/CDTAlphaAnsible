@@ -6,6 +6,11 @@
     state: present
   when: ansible_os_family in ['Debian', 'Ubuntu']
 
+- name: Install Sudo on FreeBSD
+  pkgng:
+    name: sudo
+    state: present
+  when: ansible_os_family == 'FreeBSD'
 
 - name: Create Blue Team User | Unix wheel
   user:
