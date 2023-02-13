@@ -55,6 +55,7 @@
   hosts: emoji
   become: no
   roles:
+    - rsync
 
 - name: cinderella
   hosts: cinderella

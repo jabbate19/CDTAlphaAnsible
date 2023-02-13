@@ -1,0 +1,11 @@
+- name: Install Rsyslog
+  apt:
+    name: rsyslog
+    ensure: latest
+
+- name: Activate imtcp
+  ansible.builtin.blockinfile:
+    path: /etc/resyslog.conf
+    block: |
+      $ModLoad imtcp
+      $InputTCPServerRun 514
